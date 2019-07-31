@@ -7,9 +7,12 @@ import { Container, Menu, Icon, Image } from "semantic-ui-react";
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
-    <Link onClick={logout} to="/">
-      <span className="hide-sm"> Logout</span>
-    </Link>
+    <div>
+      <Link to="/upload_file">Upload_file {"   "}</Link>
+      <Link onClick={logout} to="/">
+        <span className="hide-sm"> Logout</span>
+      </Link>
+    </div>
   );
 
   const guestLinks = (
@@ -20,8 +23,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       <li>
         <Link to="register">Register</Link>
       </li> */}
-      <Link to="/upload_file">Upload_file {"   "}</Link>
-      <Link to="/load_file">Load_file {"   "}</Link>
+
       <Link to="login">
         <Icon name="user circle" size="big" />
       </Link>
