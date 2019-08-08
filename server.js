@@ -1,6 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const logger = require("morgan");
+
 const app = express();
 
 // Connect Database
@@ -8,10 +9,9 @@ connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
+app.use(logger("dev"));
 
 app.get("/", (req, res) => res.send("API Running"));
-
-app.use(logger("dev"));
 
 // Define Routes
 app.use("/api/users", require("./routes/api/users"));
