@@ -113,6 +113,7 @@ const Login = ({ login, isAuthenticated }) => {
             >
               New to us? <Link to="/register">&nbsp; Sign Up</Link>
             </Button>
+            <Link to="/forgotpassword">ForgotPassword</Link>
           </form>
 
           <Alert />
