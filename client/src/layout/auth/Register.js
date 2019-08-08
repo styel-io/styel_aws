@@ -76,9 +76,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     <Fragment clssName="signform">
       <Grid textAlign="center" verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 350 }} className="signform">
-          <Typography variant="h3" gutterBottom>
+          {/* <Typography variant="h3" gutterBottom>
             STYEL
-          </Typography>
+          </Typography> */}
 
           <form className={classes.container} onSubmit={e => onSubmit(e)}>
             <TextField

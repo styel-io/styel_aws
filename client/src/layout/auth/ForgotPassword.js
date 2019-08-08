@@ -1,47 +1,12 @@
-import React, { Component, useEffect } from "react";
+import React, { Component} from "react";
 import axios from "axios";
 
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { Grid } from "semantic-ui-react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%"
-  },
-  container: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: "100%"
-  },
-  button: {
-    margin: theme.spacing(1)
-  },
-  input: {
-    display: "none"
-  },
-  buttonPrimary: {
-    margin: theme.spacing(1),
-    marginTop: "2rem",
-    marginBottom: "1rem",
-    color: "#22b573",
-    borderColor: "#22b573"
-  },
-  label: {
-    color: "#22b573"
-  }
-}));
-
-const title = {
-  pageTitle: "Forgot Password Screen"
-};
-
-const classes = useStyles();
 
 class ForgotPassword extends Component {
   constructor() {
@@ -54,6 +19,8 @@ class ForgotPassword extends Component {
     };
   }
 
+ 
+  
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
@@ -72,7 +39,7 @@ class ForgotPassword extends Component {
     } else {
       // 이메일 값이 존재하면 백엔드 서버 /forgotPassword 경로로 post 요청을 한다. email 값을 넣어서.
       axios
-        .post("http://localhost:5000/forgotPassword", {
+        .post("/api/auth/forgotpassword", {
           email: this.state.email
         })
         .then(response => {
@@ -101,22 +68,23 @@ class ForgotPassword extends Component {
     const { email, messageFromServer, showError, showNullError } = this.state;
 
     return (
-      <div>
+      <Grid textAlign="center" verticalAlign="middle">
+      <Grid.Column style={{ maxWidth: 350 }} className="forgotPasswordForm">
+        
         {/* form에서 submit을 하면 sendEmail 함수를 실행한다. */}
-        <form className="profile-form" onSubmit={this.sendEmail}>
-          <TextField
-            id="email"
-            label="email"
+        <form className="forgotPassword-form" onSubmit={this.sendEmail}>
+          <TextField fullWidth="true"
+            id="forgotPassword-email"
+            label="email"  type="email"
             value={email}
             onChange={this.handleChange("email")}
-            placeholder="Email Address"
+            placeholder="Email Address" margin="normal"
           />
           <Button
             size="large"
             fullWidth="true"
             variant="outlined"
             type="submit"
-            className={classes.button}
           >
             Send Password Reset Email
           </Button>
@@ -140,7 +108,6 @@ class ForgotPassword extends Component {
               fullWidth="true"
               variant="outlined"
               type="submit"
-              className={classes.button}
               href={"/register"}
             >
               Register
@@ -159,12 +126,13 @@ class ForgotPassword extends Component {
           fullWidth="true"
           variant="outlined"
           type="submit"
-          className={classes.button}
           href={"/"}
         >
           Go Home
         </Button>
-      </div>
+       
+        </Grid.Column>
+      </Grid>
     );
   }
 }

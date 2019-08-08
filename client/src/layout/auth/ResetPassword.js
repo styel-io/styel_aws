@@ -1,32 +1,23 @@
 import React, { Component } from "react";
-import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 
-import {
-  LinkButtons,
-  SubmitButtons,
-  registerButton,
-  homeButton,
-  forgotButton,
-  inputStyle,
-  HeaderBar
-} from "../../components/buttons";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import { Grid } from "semantic-ui-react";
+
 
 const loading = {
   margin: "1rem",
   fontsize: "24px"
 };
 
-const title = {
-  pageTitle: "Password Reset Screen"
-};
 
-export default class ResetPassword extends Component {
+class ResetPassword extends Component {
   constructor() {
     super();
 
     this.state = {
-      username: "",
+      email: "",
       password: "",
       confirmPassword: "",
       update: false,
@@ -39,7 +30,7 @@ export default class ResetPassword extends Component {
   async componentDidMount() {
     console.log(this.props.match.params.token);
     await axios
-      .get("http://localhost:5000/reset", {
+      .get("/api/auth/reset", {
         params: {
           resetPasswordToken: this.props.match.params.token
         }
@@ -48,7 +39,7 @@ export default class ResetPassword extends Component {
         console.log(response);
         if (response.data.message === "password reset link a-ok") {
           this.setState({
-            username: response.data.username,
+            email: response.data.email,
             update: false,
             isLoading: false,
             error: false
@@ -66,12 +57,18 @@ export default class ResetPassword extends Component {
       });
   }
 
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    })
+  }
+
   //   The Update Password Function
-  updatePassword = e => {
+  updatePassword = async e => {
     e.preventDefault();
     axios
-      .put("http://localhost:5000/updatePasswordViaEmail", {
-        username: this.state.username,
+      .put("/api/auth/updatePasswordViaEmail", {
+        email: this.state.email,
         password: this.state.password
       })
       .then(response => {
@@ -100,68 +97,87 @@ export default class ResetPassword extends Component {
     if (error) {
       return (
         <div>
-          <HeaderBar title={title} />
           <div style={loading}>
             <h4>Problem resetting password. Please send another reset link.</h4>
-            <LinkButtons
-              buttonText={`Go Home`}
-              buttonStyle={homeButton}
-              link={"/"}
-            />
-            <LinkButtons
-              buttonStyle={forgotButton}
-              buttonText={"Forgot Password?"}
-              link={"/forgotPassword"}
-            />
+           
+          <Button
+          size="large"
+          fullWidth="true"
+          variant="outlined"
+          
+          href={"/"}
+        >
+          Go Home
+        </Button>
+        <Button
+          size="large"
+          fullWidth="true"
+          variant="outlined"
+         
+          href={"/forgotpassword"}
+        >
+          Forgot Password?
+        </Button>
+        
           </div>
         </div>
       );
     } else if (isLoading) {
       return (
         <div>
-          <HeaderBar title={title} />
+          
           <div style={loading}>Loading User Data ...</div>
         </div>
       );
     } else {
       return (
         <div>
-          <HeaderBar title={title} />
-          <form className="pssword-form" onSubmit={this.updatePassword}>
-            <TextField
-              style={inputStyle}
-              id="password"
-              label="password"
-              onChange={this.handleChange("password")}
-              value={password}
-              type="password"
-            />
-            <SubmitButtons
-              buttonStyle={updateButton}
-              buttonText={"Update Password"}
-            />
+          <form className="resetPassword-form" onSubmit={this.updatePassword}>
+          <TextField fullWidth="true"
+            id="resetPassword"
+            label="password"  type="password"
+            value={password}
+            onChange={this.handleChange("password")}
+            placeholder="Password" margin="normal"
+          />
+           <Button
+            size="large"
+            fullWidth="true"
+            variant="outlined"
+            type="submit"
+          >
+            Update Password
+          </Button>
           </form>
-
           {updated && (
             <div>
               <p>
                 Your password has been successfully reset, please try logging in
                 again.
               </p>
-              <LinkButtons
-                buttonStyle={loginButton}
-                buttonText={"Login"}
-                link={`/login`}
-              />
+              <Button
+          size="large"
+          fullWidth="true"
+          variant="outlined"
+          href={"/login"}
+        >
+          Login
+        </Button> 
             </div>
           )}
-          <LinkButtons
-            buttonText={`Go Home`}
-            buttonStyle={homeButton}
-            link={"/"}
-          />
+          <Button
+          size="large"
+          fullWidth="true"
+          variant="outlined"
+          href={"/"}
+        >
+         Go Home
+        </Button>
+        
         </div>
       );
     }
   }
 }
+
+export default ResetPassword;
