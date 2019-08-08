@@ -32,3 +32,4 @@ FeedBoxCaption.propTypes = {
 };
 
 export default FeedBoxCaption;
+
