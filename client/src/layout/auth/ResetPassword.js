@@ -35,6 +35,7 @@ export default class ResetPassword extends Component {
     };
   }
 
+  //   The Initial Component Did Mount Lifecycle Method
   async componentDidMount() {
     console.log(this.props.match.params.token);
     await axios
@@ -65,6 +66,7 @@ export default class ResetPassword extends Component {
       });
   }
 
+  //   The Update Password Function
   updatePassword = e => {
     e.preventDefault();
     axios
@@ -91,19 +93,75 @@ export default class ResetPassword extends Component {
       });
   };
 
+  // The Render Method
   render() {
     const { password, error, isLoading, updated } = this.state;
 
-    if(error){
-        return(
-            <div>
-                <HeaderBar title={title} />
-                <div style={loading}>
+    if (error) {
+      return (
+        <div>
+          <HeaderBar title={title} />
+          <div style={loading}>
             <h4>Problem resetting password. Please send another reset link.</h4>
-            <LinkButtons buttonText={`Go Home`}
-                </div>
+            <LinkButtons
+              buttonText={`Go Home`}
+              buttonStyle={homeButton}
+              link={"/"}
+            />
+            <LinkButtons
+              buttonStyle={forgotButton}
+              buttonText={"Forgot Password?"}
+              link={"/forgotPassword"}
+            />
+          </div>
+        </div>
+      );
+    } else if (isLoading) {
+      return (
+        <div>
+          <HeaderBar title={title} />
+          <div style={loading}>Loading User Data ...</div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <HeaderBar title={title} />
+          <form className="pssword-form" onSubmit={this.updatePassword}>
+            <TextField
+              style={inputStyle}
+              id="password"
+              label="password"
+              onChange={this.handleChange("password")}
+              value={password}
+              type="password"
+            />
+            <SubmitButtons
+              buttonStyle={updateButton}
+              buttonText={"Update Password"}
+            />
+          </form>
+
+          {updated && (
+            <div>
+              <p>
+                Your password has been successfully reset, please try logging in
+                again.
+              </p>
+              <LinkButtons
+                buttonStyle={loginButton}
+                buttonText={"Login"}
+                link={`/login`}
+              />
             </div>
-        )
+          )}
+          <LinkButtons
+            buttonText={`Go Home`}
+            buttonStyle={homeButton}
+            link={"/"}
+          />
+        </div>
+      );
     }
   }
 }
