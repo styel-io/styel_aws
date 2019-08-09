@@ -68,9 +68,9 @@ const Login = ({ login, isAuthenticated }) => {
     <Fragment>
       <Grid textAlign="center" verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 350 }} className="signform">
-          <Typography variant="h3" gutterBottom>
+          {/* <Typography variant="h3" gutterBottom>
             STYEL
-          </Typography>
+          </Typography> */}
 
           <form className={classes.container} onSubmit={e => onSubmit(e)}>
             <TextField
@@ -113,6 +113,7 @@ const Login = ({ login, isAuthenticated }) => {
             >
               New to us? <Link to="/register">&nbsp; Sign Up</Link>
             </Button>
+            <Link to="/forgotpassword">ForgotPassword</Link>
           </form>
 
           <Alert />

@@ -2,6 +2,8 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Register from "../layout/auth/Register";
 import Login from "../layout/auth/Login";
+import ForgotPassword from "../layout/auth/ForgotPassword";
+import ResetPassword from "../layout/auth/ResetPassword";
 
 import Profiles from "../components/profiles/Profiles";
 
@@ -22,6 +24,8 @@ const Routes = () => {
       <Switch>
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/forgotpassword" component={ForgotPassword} />
+        <Route exact path="/reset/:token" component={ResetPassword} />
 
         {/* Profile */}
         <Route exact path="/profiles" component={Profiles} />

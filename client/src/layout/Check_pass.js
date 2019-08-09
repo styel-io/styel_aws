@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { check } from "../actions/auth";
@@ -99,16 +99,16 @@ const Check_pass = ({
     </form>
   );
 
-  const updateButton = (
-    <div>
-      <Link to="/basic">
-        <button>Basic Information</button>
-      </Link>
-      <Link to="/add">
-        <button>Additional Information</button>
-      </Link>
-    </div>
-  );
+  // const updateButton = (
+  //   <div>
+  //     <Link to="/basic">
+  //       <button>Basic Information</button>
+  //     </Link>
+  //     <Link to="/add">
+  //       <button>Additional Information</button>
+  //     </Link>
+  //   </div>
+  // );
 
   // 로그인이 안된 경우 리다이렉트
   if (!isAuthenticated) {
